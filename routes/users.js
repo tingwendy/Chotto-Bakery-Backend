@@ -1,9 +1,18 @@
 var express = require("express");
 var router = express.Router();
+const User = require("../models/User.model");
+const isLoggedIn = require("../middleware/isLoggedIn");
+const isLoggedOut = require("../middleware/isLoggedOut");
 
-/* GET users listing. */
-router.get("/", function (req, res, next) {
-  res.json("respond with a resource");
+router.get("/", isLoggedIn, function (req, res, next) {
+   
+   User.findById(req.user._id)
+    .populate("orders")
+    .then((userData)=> {
+      res.json({success: true, user: userData});
+    });
 });
+
+
 
 module.exports = router;
