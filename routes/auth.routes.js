@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 
 const passport = require("passport");
-const bcryptjs = require("bcryptjs");
+const bcrypt = require("bcryptjs");
 const mongoose = require("mongoose");
 
 const SALT_ROUNDS = 10;
@@ -31,7 +31,7 @@ router.post("/signup", (req, res, next) => {
 
   bcryptjs
     .genSalt(SALT_ROUNDS)
-    .then((salt) => bcryptjs.hash(password, salt))
+    .then((salt) => bcrypt.hash(password, salt))
     .then((hashedPassword) => {
       return User.create({
         // username: username

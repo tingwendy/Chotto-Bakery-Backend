@@ -41,7 +41,12 @@ const customSchema = new Schema(
 
     picUrl: {
         type: String,
-    }
+    },
+    
+    image: {
+        type: String,
+        required: false,
+    },
 
   },
   { 

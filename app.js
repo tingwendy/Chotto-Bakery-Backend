@@ -3,6 +3,7 @@ const express = require("express");
 const path = require("path");
 const cookieParser = require("cookie-parser");
 const logger = require("morgan");
+require("dotenv/config");
 
 const mongoose = require("mongoose");
 
@@ -14,12 +15,14 @@ const customRouter = require("./routes/custom.routes");
 const orderRouter = require("./routes/orders/order.routes");
 const checkoutRouter = require("./routes/checkout.routes");
 
+
+
 const cors = require("cors");
 
 const app = express();
 
 mongoose
-  .connect("mongodb://localhost/backend-api")
+  .connect(process.env.MONGODB_URI || "mongodb://localhost/backend-api")
   .then((x) => {
     console.log(
       `Connected to Mongo! Database name: "${x.connections[0].name}"`
