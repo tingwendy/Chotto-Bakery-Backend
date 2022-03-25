@@ -29,7 +29,7 @@ router.post("/signup", (req, res, next) => {
     return;
   }
 
-  bcryptjs
+  bcrypt
     .genSalt(SALT_ROUNDS)
     .then((salt) => bcrypt.hash(password, salt))
     .then((hashedPassword) => {
