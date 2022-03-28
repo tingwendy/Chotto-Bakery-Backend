@@ -12,19 +12,19 @@ const orderSchema = new Schema(
             }
         ],
     
-    paymentMethod: {type: String, required: true},
-    paymentResult: {
-        id: String,
-        status: String,
-        email_address: String
-    },
-    itemsPrice: {type: String, required: true},
+    // paymentMethod: {type: String, required: true},
+    // paymentResult: {
+    //     id: String,
+    //     status: String,
+    //     email_address: String
+    // },
+    // itemsPrice: {type: String, required: true},
     totalPrice: {type: String, required: true},
     user: {type: Schema.Types.ObjectId,
             ref: "User",
             required: true},
-    isPaid: {type: Boolean, default: false},
-    paidAt: {type: Date},
+    // isPaid: {type: Boolean, default: false},
+    // paidAt: {type: Date},
 
   },
   { 

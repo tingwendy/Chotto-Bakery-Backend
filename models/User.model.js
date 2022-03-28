@@ -17,6 +17,8 @@ const userSchema = new Schema(
       required: true,
       unique: true,
     },
+    orders:[{type: Schema.Types.ObjectId,
+    ref: "Custom" }] 
   },
   {
     // this second object adds extra properties: `createdAt` and `updatedAt`

@@ -10,6 +10,7 @@ const SALT_ROUNDS = 10;
 // require the user model !!!!
 const User = require("../models/User.model");
 const isLoggedIn = require("../middleware/isLoggedIn");
+const Custom = require("../models/Custom.model");
 
 router.post("/signup", (req, res, next) => {
   const { username, password, email } = req.body;
@@ -101,10 +102,18 @@ router.post("/logout", (req, res, next) => {
 router.get("/loggedin", isLoggedIn, (req, res, next) => {
   // req.isAuthenticated() is defined by passport
   if (req.isAuthenticated()) {
-    res.status(200).json(req.user);
-    return;
+    Custom.find({user:req.user._id})
+    .then((allCustomOrders) => {
+      res.status(200).json({user: req.user, customOrders: allCustomOrders});
+    })
+    .catch((err) => {
+      res.json(err.message);
+    });
+    
+  }else{
+    res.status(403).json({ message: "Unauthorized" });
+
   }
-  res.status(403).json({ message: "Unauthorized" });
 });
 
 module.exports = router;

@@ -5,6 +5,7 @@ const cookieParser = require("cookie-parser");
 const logger = require("morgan");
 require("dotenv/config");
 
+
 const mongoose = require("mongoose");
 
 const indexRouter = require("./routes/index");
@@ -14,8 +15,6 @@ const menuRouter = require("./routes/menu.routes");
 const customRouter = require("./routes/custom.routes");
 const orderRouter = require("./routes/orders/order.routes");
 const checkoutRouter = require("./routes/checkout.routes");
-
-
 
 const cors = require("cors");
 
@@ -73,6 +72,7 @@ app.use("/orders", orderRouter);
 app.use("/menu", menuRouter);
 app.use("/custom", customRouter);
 app.use("/checkout", checkoutRouter);
+
 
 // catch 404 and forward to error handler
 // app.use(function (req, res, next) {

@@ -30,7 +30,7 @@ router.get("/view-all", (req, res) => {
 });
 
 router.get("/view/:id", (req, res) => {
-  Menu.findById(req.params.id)
+  Menu.findOne({ menu: req.params.id})
     .then((foundMenu) => {
       res.json(foundMenu);
     })

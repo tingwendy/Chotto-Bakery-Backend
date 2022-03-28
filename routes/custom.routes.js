@@ -3,6 +3,7 @@ const Custom = require("../models/Custom.model");
 const isLoggedIn = require("../middleware/isLoggedIn");
 
 const fileUploader = require('../config/cloudinary.config');
+const User = require("../models/User.model");
 
 
 router.get("/customorder", isLoggedIn, (req, res, next) => {
@@ -10,6 +11,7 @@ router.get("/customorder", isLoggedIn, (req, res, next) => {
 });
 
 router.post("/new", isLoggedIn, (req, res) => {
+  console.log("REQ BODY", req.body);
   Custom.create({
     user: req.user._id,
     phone: req.body.phone,
@@ -19,9 +21,18 @@ router.post("/new", isLoggedIn, (req, res) => {
     quantityNeeded: req.body.quantityNeeded,
     description: req.body.description,
     foodAllergies: req.body.foodAllergies,
-    picUrl: req.body.picUrl,
+    image: req.body.image,
   })
     .then((createdCustomOrder) => {
+      User.findByIdAndUpdate(
+        req.user._id, 
+        {$push:{orders: createdCustomOrder._id}}
+        )
+        .then(() => {
+        })
+        .catch((err) => {
+          res.json(err.message);
+        });
       res.json(createdCustomOrder);
     })
     .catch((err) => {
@@ -30,7 +41,7 @@ router.post("/new", isLoggedIn, (req, res) => {
 });
 
 router.get("/view-order", isLoggedIn, (req, res) => {
-  Custom.find()
+  Custom.find({user: req.user._id})
     .then((foundCustomOrder) => {
       res.json(foundCustomOrder);
     })
@@ -60,7 +71,7 @@ router.delete("/cancel/:id", isLoggedIn, (req, res) => {
     });
 });
 
-router.post("/upload-image", fileUploader.single("imageUrl"), isLoggedIn, (req, res)=> {
+router.post("/upload-image", fileUploader.single("imageUrl"),(req, res)=> {
   console.log("FILE", req.file);
   res.json(req.file);
 });
