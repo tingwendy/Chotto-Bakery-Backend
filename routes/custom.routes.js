@@ -51,7 +51,7 @@ router.get("/view-order", isLoggedIn, (req, res) => {
 });
 
 router.put("/edit/:id", isLoggedIn, (req, res) => {
-  console.log({ customShyte: "custom routes" });
+  console.log({ custom: "custom routes" });
   Custom.findByIdAndUpdate(req.params.id, req.body, { new: true })
     .then((updatedCustomOrder) => {
       res.json(updatedCustomOrder);
